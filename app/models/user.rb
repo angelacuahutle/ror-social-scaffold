@@ -15,13 +15,11 @@ class User < ApplicationRecord
   has_many :friends, through: :friendships_confirmation
   has_many :friend_requests, through: :reverse_friendships, source: :user
 
-
-
- # def friends
+  # def friends
   #  friends_array = friends.map { |friendship| freindship.friend if friendship.confirmed }
   #  friends_array + inverse_friendships.map { |friendship| friendship.user if friendship.confirmed }
   #  friends_array.compact
- # end
+  # end
 
   def friend?(user)
     friends.include?(user)
