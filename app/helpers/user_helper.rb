@@ -1,21 +1,27 @@
 module UserHelper
-  # Users who have yet to confirme friend requests
-  def pending_friends
-    friendships.map { |friendship| friendship.friend unless friendship.confirmed }.compact
-  end
+  def render_friendship_btn(user)
+    return if current_user == user
 
-  # Users who have requested to be friends
-  def friend_requests
-    inverse_friendships.map { |friendship| friendship.user unless friendship.confirmed }.compact
-  end
+    friendship_param = { friendship: { user_id: current_user, friend_id: user, confirmed: false } }
+    delete_param = { id: user.id }
 
-  def confirm_friend(user)
-    friendship = inverse_friendships.find { |f| f.user == user }
-    friendship.confirmed = true
-    friendship.save
-  end
+    if !current_user.friend?(user) && !current_user.already_friend?(user)
+      link_to 'Add Friend', friendships_path(friendship_param),
+              method: :post, class: ''
 
-  def friend?(user)
-    friends.include?(user)
+    elsif !current_user.already_friend?(user)
+      link_to 'Remove friend',
+              friendship_path(delete_param),
+              method: :delete, class: ''
+
+    elsif current_user.already_friend?(user)
+
+      link = capture do
+        link_to 'Delete Request', friendship_path(delete_param),
+                method: :delete, class: ''
+      end
+      link << capture { link_to ' request pending..', friendship_path(current_user), class: '' }
+    end
   end
 end
+
