@@ -32,4 +32,8 @@ class User < ApplicationRecord
       friend_requests.include?(user)
     end
   end
+
+  def friendship_created?(friend)
+    friendships.find_by(friend_id: friend.id).nil? && created_inverse?(friend)
+  end
 end
