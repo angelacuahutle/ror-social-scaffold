@@ -1,4 +1,10 @@
 class FriendshipsController < ApplicationController
+
+  def index
+    @friendships = current_user.friendships
+    @inverse_friendships = current_user.inverse_friendships
+  end
+
   def new
     @friendship = Friendship.new
   end

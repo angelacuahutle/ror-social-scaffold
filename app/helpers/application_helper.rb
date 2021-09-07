@@ -4,7 +4,7 @@ module ApplicationHelper
 
     content_tag(:div, class: class_name) do
       link_to link_text, link_path
-    end
+    end 
   end
 
   def like_or_dislike_btn(post)
@@ -14,5 +14,11 @@ module ApplicationHelper
     else
       link_to('Like!', post_likes_path(post_id: post.id), method: :post)
     end
+  end
+
+  def confirm_decline(request)
+    return unless request.user.confirm_inverse?(current_user)
+
+    render partial: 'friendships/confirm_decline', locals: { request: request }
   end
 end
