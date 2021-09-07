@@ -12,7 +12,6 @@ class User < ApplicationRecord
   has_many :friendships
   has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'friend_id'
   has_many :friends, through: :friendship
-  has_many :friends, through: :friendships_confirmation
   has_many :friend_requests, through: :reverse_friendships, source: :user
 
   # def friends
