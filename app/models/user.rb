@@ -39,4 +39,8 @@ class User < ApplicationRecord
   def friendship_created?(friend)
     friendships.find_by(friend_id: friend.id).nil? && created_inverse?(friend)
   end
+
+  def confirm_inverse?(friend)
+    !friendships.find_by(friend_id: friend.id, confirmed: false).nil?
+  end
 end
