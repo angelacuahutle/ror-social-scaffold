@@ -11,6 +11,8 @@ class FriendshipsController < ApplicationController
 
   def create
     @friendship = current_user.friendships.build(friend_id: friendship_params[:user_id])
+    @friendship.confirmed = false
+
     if @friendship.save
       flash[:notice] = 'Friend request was successfully sent.'
       redirect_to request.referrer
