@@ -25,5 +25,10 @@
       </tbody>
     </table>
     <hr class = 'hr'>
+      <ul class="users-list">
+  <% @inverse_friendships.reverse.each do |request|%>
+    <%= confirm_decline(request) %>
+  <% end %> 
+  </ul>
   <%end%>
 </div>

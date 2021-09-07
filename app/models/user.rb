@@ -33,6 +33,10 @@ class User < ApplicationRecord
     end
   end
 
+  def created_inverse?(friend)
+    friend.friendships.find_by(friend_id: id).nil?
+  end
+
   def friendship_created?(friend)
     friendships.find_by(friend_id: friend.id).nil? && created_inverse?(friend)
   end
