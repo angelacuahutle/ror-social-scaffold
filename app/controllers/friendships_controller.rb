@@ -1,5 +1,4 @@
 class FriendshipsController < ApplicationController
-
   def index
     @friendships = current_user.friendships
     @inverse_friendships = current_user.inverse_friendships
@@ -30,7 +29,7 @@ class FriendshipsController < ApplicationController
 
   def destroy
     @friendship = Friendship.where(user_id: [params[:id], current_user.id],
-                                  friend_id: [current_user.id, params[:id]])
+                                   friend_id: [current_user.id, params[:id]])
     redirect_to users_path if @friendship.destroy_all
     if @friendship.destroy
       redirect_to request.referrer, notice: 'Friend request declined'
@@ -39,13 +38,13 @@ class FriendshipsController < ApplicationController
     end
   end
 
- private
+  private
 
   def friendship_params
     params.permit(:user_id, :friend_id, :confirmed)
   end
 
   def request_exist?
-   current_user.already_friend?(User.find_by(id: params[:friendship][:friend_id]))
+    current_user.already_friend?(User.find_by(id: params[:friendship][:friend_id]))
   end
 end
