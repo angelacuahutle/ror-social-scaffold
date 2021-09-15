@@ -41,7 +41,7 @@ class FriendshipsController < ApplicationController
       redirect_to request.referrer, alert: @friendship.errors.full_messages.join('. ').to_s
     end
   end
-
+   
   private
 
   def friendship_params
