@@ -34,14 +34,15 @@ class FriendshipsController < ApplicationController
   end
 
   def destroy
-    @friendship = Friendship.where(user_id: [params[:id], current_user.id],
+    @friendship = Friendship.find_by(friend_id: current_user.id, user_id: params[:user_id])
+
     if @friendship.destroy
       redirect_to request.referrer, notice: 'Friend request declined'
     else
       redirect_to request.referrer, alert: @friendship.errors.full_messages.join('. ').to_s
     end
   end
-   
+
   private
 
   def friendship_params
