@@ -50,5 +50,5 @@ class User < ApplicationRecord
 
   def friends_and_own_posts
     Post.ordered_by_most_recent.where(user: friends.push(self))
-   end
+  end
 end
