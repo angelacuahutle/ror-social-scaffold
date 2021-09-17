@@ -51,8 +51,4 @@ class User < ApplicationRecord
   def confirm_inverse?(friend)
     !friendships.find_by(friend_id: friend.id, confirmed: false).nil?
   end
-
-  def friends_and_own_posts
-    Post.ordered_by_most_recent.where(user: friends.push(self))
-  end
 end
