@@ -1,5 +1,9 @@
 # Scaffold for social media app with Ruby on Rails
 
+![screenshot](./pic1.png)
+![screenshot](./pic2.png)
+![screenshot](./pic4.png)
+
 > This repo includes intial code for social media app with basic styling. Its purpose is to be a starting point for Microverse students.
 
 ## Built With

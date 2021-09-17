@@ -18,6 +18,10 @@ class User < ApplicationRecord
 
   has_many :friendships
 
+  def friends_and_own_posts
+    Post.ordered_by_most_recent.where(user: friends.push(self))
+  end
+
   def friends
     friends_array = friendships.map { |friendship| friendship.friend if friendship.confirmed }
     friends_array += inverse_friendships.map { |friendship| friendship.user if friendship.confirmed }
