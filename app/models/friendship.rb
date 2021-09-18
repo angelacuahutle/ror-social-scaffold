@@ -1,4 +1,4 @@
-class DupplicateValidator < ActiveModel::Validator
+class DuplicateValidator < ActiveModel::Validator
   def validate(record)
     friend1 = Friendship.find_by(user_id: record.user_id, friend_id: record.friend_id)
     friend2 = Friendship.find_by(friend_id: record.user_id, user_id: record.friend_id)
@@ -14,10 +14,14 @@ end
 
 class Friendship < ApplicationRecord
   include ActiveModel::Validations
-  # validates_with DupplicateValidator, on: :create
+  validates_with DuplicateValidator, on: :create
   validates_with SelfFriendshipValidator
+
   belongs_to :user
   belongs_to :friend, class_name: 'User'
+  
+  validates :user, presence: true
+  validates :friend, presence: true
 
   def accept_request
     update_attributes(confirmed: true)
@@ -25,8 +29,6 @@ class Friendship < ApplicationRecord
                        user_id: friend_id,
                        confirmed: true)
   end
-  validates :user, presence: true
-  validates :friend, presence: true
 
   def confirm_friend
     # self.update_attributes(confirmed: true)

@@ -1,27 +1,38 @@
 module UserHelper
-  def friend_request(user)
-    render partial: 'friend', locals: { user: user } if current_user.friendship_created?(user) && !current_user?(user)
-  end
-
+  
+  # Not in use now
   def current_user?(user)
     current_user == user
   end
 
+  ## conditional rendering
+  def friend_request(user)
+    render partial: 'friend', locals: { user: user } if current_user.friendship_created?(user) && !current_user?(user)
+  end
+  
   def user_info(user)
-    return if current_user?(user)
-
-    # rubocop:disable Lint/UselessAssignment
-    request = Friendship.find_by(user_id: user.id, friend_id: current_user.id, confirmed: false)
-    # rubocop:enable Lint/UselessAssignment
+    i_requested = Friendship.find_by(user_id: current_user.id, friend_id: user.id, confirmed: false)
+    requested_to_me = Friendship.find_by(user_id: user.id, friend_id: current_user.id, confirmed: false)
+    requests? = i_requested || requested_to_me
     if current_user.friends.include?(user)
       render partial: 'user', locals: { user: user }
     elsif current_user.pending_friends.include?(user)
-      render partial: 'users/pending', locals: { user: user }
+      #confirm_decline(request, user)
+      confirm_decline(requests)
+      # render partial: 'users/pending', locals: { user: user }
     elsif current_user.friend_requests.include?(user)
-      request = Friendship.find_by(user_id: user.id, friend_id: current_user.id, confirmed: false)
-      render partial: 'friendships/confirm_decline', locals: { request: request }
-    else
+      #confirm_decline(request, user)
+      # render partial: 'friendships/confirm_decline', locals: { request: request }
+    elsif request.nil?
       friend_request(user)
     end
+  end
+
+  def already_requested?(user)
+    # return if current_user
+    
+    # current_user?
+
+    # end
   end
 end

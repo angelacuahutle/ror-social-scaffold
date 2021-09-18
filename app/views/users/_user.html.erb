@@ -1,9 +1,7 @@
-<li>
-  Name: <%= user.name %>
-  <span class="profile-link">
-      <%= link_to 'See Profile |',  user_path(user), class: 'profile-link' %>
-    <%= form_for(current_user.friendships.new, url: user_friendships_path(user)) do |form| %>
-    <%= form.submit 'Add Friend', class: 'btn btn-secondary' %>
-  <% end %>
-</span>
+<li class="profile-block">
+  <h1><%= user.name %></h1>
+  <div class="">
+    <p>You are friends!</p>
+    <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
+  </div>
 </li>
