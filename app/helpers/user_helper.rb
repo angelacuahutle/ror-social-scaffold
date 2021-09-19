@@ -11,17 +11,13 @@ module UserHelper
   end
   
   def user_info(user)
-
-    byebug
+    request = Friendship.all.double_search_requested(current_user, user)
     if current_user.friends.include?(user)
       render partial: 'user', locals: { user: user }
     elsif current_user.pending_friends.include?(user)
-      #confirm_decline(request, user)
-      confirm_decline(requests)
-      # render partial: 'users/pending', locals: { user: user }
+      render partial: 'friendships/confirm_decline', locals: { request: request }
     elsif current_user.friend_requests.include?(user)
-      #confirm_decline(request, user)
-      # render partial: 'friendships/confirm_decline', locals: { request: request }
+      render partial: 'friendships/confirm_decline', locals: { request: request }
     elsif request.nil?
       friend_request(user)
     end

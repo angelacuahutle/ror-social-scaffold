@@ -10,7 +10,7 @@ class Friendship < ApplicationRecord
 
   belongs_to :user
   belongs_to :friend, class_name: 'User'
-  
+
   validates :user, presence: true
   validates :friend, presence: true
 
@@ -33,7 +33,19 @@ class Friendship < ApplicationRecord
     i_requested || requested_to_me
   end
 
-  def search_both_sides(current_user, user)
+  def self.double_search_requested(current_user, user)
+    case1 = Friendship.find_by(user_id: current_user, friend_id: user, confirmed: false)
+    case2 = Friendship.find_by(user_id: user, friend_id: current_user, confirmed: false)
+    return current_user.friendships.build(friend_id: user) unless case1 || case2
+
+    if case1.nil?
+      case2.id
+    elsif case2.nil?
+      case1.id
+    end
+  end
+
+  def self.double_search_confirmed(current_user, user)
     if Friendship.find_by(user_id: current_user, friend_id: user, confirmed: true).empty?
       Friendship.find_by(user_id: user, friend_id: current_user, confirmed: true).id
     else

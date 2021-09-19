@@ -1,13 +1,6 @@
 <li>
-  <div class="d-flex">
-    <h2><%= user.name %></h2>
-  </div>
-  <span>
-    <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
-  </span>
-  <span>
-    <%= form_for(current_user.friendships.new, url: user_friendships_path(user)) do |form| %>
-      <%= form.submit 'Add Friend', class: 'btn btn-secondary' %>
-    <% end %>
-  </span>
+  <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
+  <%= form_for(current_user.friendships.new, url: user_friendships_path(user)) do |form| %>
+    <%= form.submit 'Add Friend', class: 'btn btn-secondary' %>
+  <% end %>
 </li>
