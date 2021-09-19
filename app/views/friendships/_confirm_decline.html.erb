@@ -1,5 +1,5 @@
-<div class="request">
-  <p class="name">Name: <%= request.user.name %> </p>
+<li class="profile-block">
+  <h1><%= not_current_user(request) %></h1>
   <%= button_to 'Accept', user_friendship_path(request.user.id, request.id), method: :put, class: 'btn btn-primary' %>
   <%= button_to 'Decline', user_friendship_path(request.user.id, request.id), method: :delete, class: 'btn btn-primary' %>
-</div>
+</li>

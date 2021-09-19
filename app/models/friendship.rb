@@ -39,9 +39,9 @@ class Friendship < ApplicationRecord
     return current_user.friendships.build(friend_id: user) unless case1 || case2
 
     if case1.nil?
-      case2.id
+      case2
     elsif case2.nil?
-      case1.id
+      case1
     end
   end
 
