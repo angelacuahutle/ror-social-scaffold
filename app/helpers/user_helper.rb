@@ -12,7 +12,7 @@ module UserHelper
   
   def user_info(user)
 
-    
+    byebug
     if current_user.friends.include?(user)
       render partial: 'user', locals: { user: user }
     elsif current_user.pending_friends.include?(user)
