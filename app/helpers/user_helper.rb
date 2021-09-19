@@ -11,9 +11,8 @@ module UserHelper
   end
   
   def user_info(user)
-    i_requested = Friendship.find_by(user_id: current_user.id, friend_id: user.id, confirmed: false)
-    requested_to_me = Friendship.find_by(user_id: user.id, friend_id: current_user.id, confirmed: false)
-    requests? = i_requested || requested_to_me
+
+    
     if current_user.friends.include?(user)
       render partial: 'user', locals: { user: user }
     elsif current_user.pending_friends.include?(user)

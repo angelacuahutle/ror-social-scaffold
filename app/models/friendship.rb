@@ -1,11 +1,3 @@
-class DuplicateValidator < ActiveModel::Validator
-  def validate(record)
-    friend1 = Friendship.find_by(user_id: record.user_id, friend_id: record.friend_id)
-    friend2 = Friendship.find_by(friend_id: record.user_id, user_id: record.friend_id)
-    record.errors[:base].push('This relationship is already created') unless friend1.nil? && friend2.nil?
-  end
-end
-
 class SelfFriendshipValidator < ActiveModel::Validator
   def validate(record)
     record.errors[:base].push("You can't be friends with yourself") if record.user_id == record.friend_id
@@ -14,7 +6,6 @@ end
 
 class Friendship < ApplicationRecord
   include ActiveModel::Validations
-  validates_with DuplicateValidator, on: :create
   validates_with SelfFriendshipValidator
 
   belongs_to :user
@@ -23,17 +14,16 @@ class Friendship < ApplicationRecord
   validates :user, presence: true
   validates :friend, presence: true
 
-  def accept_request
-    update_attributes(confirmed: true)
-    Friendship.create!(friend_id: user_id,
-                       user_id: friend_id,
-                       confirmed: true)
-  end
-
   def confirm_friend
     # self.update_attributes(confirmed: true)
     Friendship.create!(friend_id: user_id,
                        user_id: friend_id,
                        confirmed: true)
+  end
+
+  def exist?(current_user, user)
+    i_requested = !Friendship.find_by(user_id: current_user.id, friend_id: user.id, confirmed: false).empty
+    requested_to_me = !Friendship.find_by(user_id: user.id, friend_id: current_user.id, confirmed: false).empty
+    i_requested || requested_to_me
   end
 end
