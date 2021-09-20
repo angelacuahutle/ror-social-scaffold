@@ -11,16 +11,24 @@ module UserHelper
 
   def user_info(user)
     request = Friendship.all.double_search_requested(current_user, user)
-    # byebug
     if current_user.friends.include?(user)
       render partial: 'user', locals: { user: user }
     elsif current_user.pending_friends.include?(user)
       render partial: 'friendships/confirm_decline', locals: { request: request }
     elsif current_user.friend_requests.include?(user)
       render partial: 'friendships/confirm_decline', locals: { request: request }
-    elsif request.nil?
-      # byebug
-      friend_request(user)
+    else
+      render partial: 'user', locals: { user: user }
+    end
+  end
+
+  def friends_message(user)
+    if current_user.friend?(user)
+      content_tag :p, 'You are friends!'
+    else
+      form_for(current_user.friendships.new, url: user_friendships_path(user)) do |form|
+        form.submit 'Add Friend', class: 'btn btn-secondary'
+      end
     end
   end
 end
