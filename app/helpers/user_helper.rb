@@ -1,5 +1,4 @@
 module UserHelper
-  
   # Not in use now
   def current_user?(user)
     current_user == user
@@ -16,14 +15,12 @@ module UserHelper
     if current_user.friends.include?(user)
       render partial: 'user', locals: { user: user }
     elsif current_user.pending_friends.include?(user)
-      # byebug
       render partial: 'friendships/confirm_decline', locals: { request: request }
     elsif current_user.friend_requests.include?(user)
       render partial: 'friendships/confirm_decline', locals: { request: request }
     elsif request.nil?
+      # byebug
       friend_request(user)
     end
   end
-
-  
 end
