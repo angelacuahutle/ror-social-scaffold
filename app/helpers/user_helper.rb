@@ -29,7 +29,7 @@ module UserHelper
     elsif current_user.friend_requests.include?(user)
       content_tag :p, 'You already sent the request.'
     else
-      #byebug
+      # byebug
       form_for(current_user.friendships.new, url: user_friendships_path(user)) do |form|
         form.submit 'Add Friend', class: 'btn btn-secondary'
       end
