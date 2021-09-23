@@ -20,4 +20,12 @@ module FriendshipsHelper
   def friend?(user)
     friends.include?(user)
   end
+
+  def not_current_user(request)
+    if request.user_id == current_user.id
+      request.friend.name.capitalize
+    else
+      request.user.name.capitalize
+    end
+  end
 end
