@@ -4,9 +4,7 @@ class PostsController < ApplicationController
   def index
     @post = Post.new
     timeline_posts
-      if stale?(public: true)
-        render json: @post
-      end
+    json_response(@timeline_posts)
   end
 
   def create
