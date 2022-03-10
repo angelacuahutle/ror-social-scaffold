@@ -1,4 +1,3 @@
-config.api_only = true
 require_relative 'boot'
 
 require "rails"
