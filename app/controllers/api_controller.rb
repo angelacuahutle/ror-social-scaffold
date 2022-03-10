@@ -11,9 +11,9 @@ class ApiController < ActionController::API
     @comment = Comment.create(post_id: params[:post_id], user_id: params[:user_id], content: params[:content])
 
     if @comment.save
-      render json: "Comment created successfully!"
+      render json: 'Comment created successfully!'
     else
-      render json: "Comment not created!"
+      render json: 'Comment not created!'
     end
   end
 end
