@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: Ruby 3.0
+  TargetRubyVersion: 3.0
   Exclude:
     - "db/**/*"
     - "bin/*"
