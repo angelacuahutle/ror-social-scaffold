@@ -38,18 +38,22 @@ gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'devise'
-
+gem 'devise-jwt'
+gem 'rswag'
+gem 'json-schema'
+gem 'multi_json', '~> 1.11', '>= 1.11.2'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'factory_bot', '~> 6.2'
-  gem 'faker', '~> 2.19'
   gem 'rspec', '~> 3.10'
   gem 'rspec-rails', '~> 5.0', '>= 5.0.2'
-  gem 'shoulda-matchers'
 end
 
 group :test do
+  gem 'database_cleaner'
+  gem 'factory_bot_rails', '~> 4.0'
+  gem 'faker'
+  gem 'shoulda-matchers', '~> 3.1'
 end
 
 group :development do
