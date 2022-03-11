@@ -1,0 +1,52 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/posts/comment":
+    post:
+      summary: Creates a new comment
+      tags:
+      - New Comment
+      parameters: []
+      responses:
+        '200':
+          description: comment created
+        '404':
+          description: comment was NOT created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                post_id:
+                  type: integer
+                content:
+                  type: string
+              required:
+              - user_id
+              - post_id
+              - content
+  "/api/posts":
+    get:
+      summary: All posts
+      tags:
+      - Posts
+      parameters: []
+      responses:
+        '200':
+          description: Return all posts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
