@@ -45,6 +45,20 @@ paths:
           application/json:
             schema:
               type: object
+  "/api/posts/comments":
+    get:
+      summary: All comments
+      tags:
+      - Comments
+      parameters: []
+      responses:
+        '200':
+          description: Return all comments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
 servers:
 - url: https://{defaultHost}
   variables:

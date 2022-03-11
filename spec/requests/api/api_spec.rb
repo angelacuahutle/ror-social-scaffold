@@ -43,4 +43,19 @@ RSpec.describe 'api/api', type: :request do
           end
         end
     end
+
+    path '/api/posts/comments' do
+
+     get 'All comments' do
+        tags 'Comments'
+        consumes 'application/json'
+        parameter name: :comment, in: :body, schema: {
+          type: :object,
+        }
+  
+        response '200', 'Return all comments' do
+          run_test!
+        end
+      end
+  end
 end
